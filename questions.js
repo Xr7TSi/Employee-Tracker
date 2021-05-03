@@ -17,12 +17,43 @@ module.exports = {
     {
       type: "input",
       message: "Enter Employee first name.",
-      name: "firstName",
+      name: "employeeFirstName",
     },
     {
       type: "input",
       message: "Enter Employee last name.",
-      name: "lastName",
+      name: "employeeLastName",
+    },
+    {
+      type: "list",
+      message: "Choose Employee Role.",
+      name: "employeeRole",
+      choices: [
+        "Sales Lead",
+        "Salesperson",
+        "Lead Engineer",
+        "Software Engineer",
+        "Accountant",
+        "Legal Team Lead",
+        "General Counsel",
+        "Manager",
+      ],
+    },
+    {
+      type: "list",
+      message: "Choose Employee Department.",
+      name: "employeeDepartment",
+      choices: ["Sales", "Engineering", "Finance", "Legal"],
+    },
+    {
+      type: "input",
+      message: "Enter employee salary.",
+      name: "employeeSalary",
+    },
+    {
+      type: "input",
+      message: "Enter employee's Manager.",
+      name: "employeeManager",
     },
   ],
 };
