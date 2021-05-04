@@ -16,17 +16,17 @@ module.exports = {
   addEmployee: [
     {
       type: "input",
-      message: "Enter Employee first name.",
+      message: "Enter Employee first name:",
       name: "employeeFirstName",
     },
     {
       type: "input",
-      message: "Enter Employee last name.",
+      message: "Enter Employee last name:",
       name: "employeeLastName",
     },
     {
       type: "list",
-      message: "Choose Employee Role.",
+      message: "Choose Employee Role:",
       name: "employeeRole",
       choices: [
         "Sales Lead",
@@ -41,18 +41,18 @@ module.exports = {
     },
     {
       type: "list",
-      message: "Choose Employee Department.",
+      message: "Choose Employee Department:",
       name: "employeeDepartment",
       choices: ["Sales", "Engineering", "Finance", "Legal"],
     },
     {
       type: "input",
-      message: "Enter employee salary.",
+      message: "Enter employee salary:",
       name: "employeeSalary",
     },
     {
       type: "input",
-      message: "Enter employee's Manager.",
+      message: "Enter employee's Manager:",
       name: "employeeManager",
     },
   ],
