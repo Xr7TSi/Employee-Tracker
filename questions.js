@@ -1,4 +1,4 @@
-const roles = [ "Sales Lead",
+export const roles = [ "Sales Lead",
 "Salesperson",
 "Lead Engineer",
 "Software Engineer",
@@ -75,4 +75,5 @@ module.exports = {
       name: "newDepartment",
     },
   ],
+  
 };

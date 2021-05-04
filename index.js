@@ -59,3 +59,4 @@ function appendRole() {
     })
     .then(() => getUserOption());
 }
+
