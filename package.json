@@ -1,0 +1,25 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xr7TSi/Employee-Tracker.git"
+  },
+  "author": "Jonathan Rein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xr7TSi/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/Xr7TSi/Employee-Tracker#readme"
+}
