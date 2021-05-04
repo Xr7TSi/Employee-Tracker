@@ -11,12 +11,19 @@ const connection = mysql.createConnection({
   database: "employeeTracker_db",
 });
 
-const employeeFirstName = null;
-const employeeLastName = null;
-const employeeRole = null;
-const employeeDepartment = null;
-const employeeSalary = null;
-const employeeManager = null;
+// const employeeFirstName = null;
+// const employeeLastName = null;
+// const employeeRole = null;
+// const employeeDepartment = null;
+// const employeeSalary = null;
+// const employeeManager = null;
+
+// const employeeFirstName = "Jonathan";
+// const employeeLastName = "Rein";
+// const employeeRole = "Software Engineer";
+// const employeeDepartment = null;
+// const employeeSalary = 100000;
+// const employeeManager = "Gus Fring";
 
 getUserOption();
 
@@ -32,23 +39,19 @@ function getEmployeeData() {
   inquirer
     .prompt(addEmployee)
     .then((data) => {
-      return inquirer.prompt(addEmployee).then((data) => {
-        const employeeFirstName = data.employeeFirstName;
-        const employeeLastName = data.employeeLastName;
-        const employeeRole = data.employeeRoleId;
-        const employeeDepartment = data.employeeDepartment;
-        const employeeSalary = data.employeeSalary;
-        const employeeManager = data.employeeManager;
-      });
+      connection.query(
+        "INSERT INTO employees SET ?",
+        {
+          first_name: data.employeeFirstName,
+          last_name: data.employeeLastName,
+          role_name: data.employeeRole,
+          manager_name: data.employeeManager,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} added new employee to database.\n`);
+        }
+      );
     })
-    .then(() => addEmployeeData());
-}
-
-function addEmployeeData() {
-  connection.connect(function (err) {
-    if (err) throw err;
-    console.log("Adding new employee to database...\n");
-    var sql =
-      "INSERT INTO employees (first_name, last_name, role_name, manager_name) VALUES ('+employeeFirstName+', '+employeeLastName+', '+employeeRole+', '+employeeManager+'))";
-  });
+    .then(getUserOption());
 }
