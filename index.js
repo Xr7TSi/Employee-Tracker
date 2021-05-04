@@ -27,7 +27,7 @@ function getUserOption() {
 }
 getUserOption();
 
-function getEmployeeData() {
+function pushEmployeeData() {
   inquirer.prompt(addEmployee).then((data) => {
     return inquirer.prompt(addEmployee).then((data) => {
       const employeeFirstName = data.employeeFirstName;
