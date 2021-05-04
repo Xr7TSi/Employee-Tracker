@@ -11,6 +11,13 @@ const connection = mysql.createConnection({
   database: "employeeTracker_db",
 });
 
+let employeeFirstName = null;
+let employeeLastName = null;
+let employeeRole = null;
+let employeeDepartment = null;
+let employeeSalary = null;
+let employeeManager = null;
+
 function getUserOption() {
   inquirer.prompt(userOptions).then((data) => {
     if ((data.userOption = "Add Employee")) {
@@ -22,11 +29,48 @@ getUserOption();
 
 function getEmployeeData() {
   inquirer.prompt(addEmployee).then((data) => {
-    const employeeFirstName = data.employeeFirstName;
-    const employeeLastName = data.employeeLastName;
-    const employeeRole = data.employeeRole;
-    const employeeDepartment = data.employeeDepartment;
-    const employeeSalary = data.employeeSalary;
-    const employeeManager = data.employeeManager;
+    let employeeFirstName = data.employeeFirstName;
+    let employeeLastName = data.employeeLastName;
+    let employeeRole = data.employeeRoleId;
+    let employeeDepartment = data.employeeDepartment;
+    let employeeSalary = data.employeeSalary;
+    let employeeManager = data.employeeManager;
   });
 }
+
+const addEmployee = () => {
+  console.log("Adding new employee to database...\n");
+  const query = connection.query("UPDATE employees SET ? WHERE ?", [
+    {
+      first_name: employeeFirstName,
+    },
+    {
+      last_name: employeeLastName,
+    },
+    {
+      role_id: employeeRole,
+    },
+  ]);
+};
+
+const addNewDepartment = () => {
+  console.log("Adding new Department...\n");
+  const query = connection.query(
+    // update format probably incorrect
+    "UPDATE departments SET ? WHERE ?",
+    [
+      {
+        // department_name = Need to add inquirer question for this
+      },
+    ]
+  );
+};
+
+const addNewRole = () => {
+  console.log("Adding new Role...\n");
+  const query = connection.query("UPDATE roles SET ? WHERE ?", [
+    [
+      // role_name = Need to add inquirer question for this
+    ],
+  ]);
+};
