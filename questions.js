@@ -1,7 +1,7 @@
 module.exports = {
   userOptions: {
     type: "list",
-    name: "userActivity",
+    name: "userOption",
     choices: [
       "View all Employees",
       "View all Employees by Department",
