@@ -16,12 +16,14 @@ getUserOption();
 function getUserOption() {
   inquirer.prompt(userOptions).then((data) => {
     if (data.userOption === "Add Employee") {
-      getEmployeeData();
+      insertEmployeeData();
+    } else if (data.userOption === "Add Role") {
+      appendRole()
     }
   });
 }
 
-function getEmployeeData() {
+function insertEmployeeData() {
   inquirer.prompt(addEmployee).then((data) => {
     connection.query(
       "INSERT INTO employees SET ?",
@@ -38,3 +40,9 @@ function getEmployeeData() {
     );
   }) .then(() => getUserOption());
 }
+
+// function appendRole() {
+//   inquirer.prompt(addRole).then((data) => {
+
+//   })
+// }

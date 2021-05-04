@@ -1,3 +1,13 @@
+const roles = [ "Sales Lead",
+"Salesperson",
+"Lead Engineer",
+"Software Engineer",
+"Accountant",
+"Legal Team Lead",
+"General Counsel",
+"Manager",]
+
+
 module.exports = {
   userOptions: {
     type: "list",
@@ -10,6 +20,8 @@ module.exports = {
       "Remove Employee",
       "Update Employee Role",
       "Update Employee Manager",
+      "Add new Role",
+      "Add new Department",
     ],
   },
 
@@ -28,16 +40,7 @@ module.exports = {
       type: "list",
       message: "Choose Employee Role:",
       name: "employeeRole",
-      choices: [
-        "Sales Lead",
-        "Salesperson",
-        "Lead Engineer",
-        "Software Engineer",
-        "Accountant",
-        "Legal Team Lead",
-        "General Counsel",
-        "Manager",
-      ],
+      choices: roles,
     },
     {
       type: "list",
@@ -54,6 +57,22 @@ module.exports = {
       type: "input",
       message: "Enter employee's Manager:",
       name: "employeeManager",
+    },
+  ],
+
+  addRole: [
+    {
+      type: "input",
+      message: "Enter new Role:",
+      name: "newRole",
+    },
+  ],
+
+  addDepartment: [
+    {
+      type: "input",
+      message: "Enter new Department:",
+      name: "newDepartment",
     },
   ],
 };
