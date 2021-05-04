@@ -18,6 +18,8 @@ const employeeDepartment = null;
 const employeeSalary = null;
 const employeeManager = null;
 
+getUserOption();
+
 function getUserOption() {
   inquirer.prompt(userOptions).then((data) => {
     if (data.userOption === "Add Employee") {
@@ -25,40 +27,24 @@ function getUserOption() {
     }
   });
 }
-getUserOption();
 
-function pushEmployeeData() {
-  inquirer.prompt(addEmployee).then((data) => {
-    return inquirer.prompt(addEmployee).then((data) => {
-      const employeeFirstName = data.employeeFirstName;
-      const employeeLastName = data.employeeLastName;
-      const employeeRole = data.employeeRoleId;
-      const employeeDepartment = data.employeeDepartment;
-      const employeeSalary = data.employeeSalary;
-      const employeeManager = data.employeeManager;
-    });
-  });
+function getEmployeeData() {
+  inquirer
+    .prompt(addEmployee)
+    .then((data) => {
+      return inquirer.prompt(addEmployee).then((data) => {
+        const employeeFirstName = data.employeeFirstName;
+        const employeeLastName = data.employeeLastName;
+        const employeeRole = data.employeeRoleId;
+        const employeeDepartment = data.employeeDepartment;
+        const employeeSalary = data.employeeSalary;
+        const employeeManager = data.employeeManager;
+      });
+    })
+    .then(() => addEmployeeData());
 }
 
-// const addEmployee = () => {
-//   console.log("Adding new employee to database...\n");
-//   const query = connection.query("UPDATE employees SET ? WHERE ?", [
-//     {
-//       first_name: employeeFirstName,
-//     },
-//     {
-//       last_name: employeeLastName,
-//     },
-//     {
-//       role_name: employeeRole,
-//     },
-//     {
-//       manager_name: employeeManager,
-//     },
-//   ]);
-// };
-
-function addEmployee() {
+function addEmployeeData() {
   connection.connect(function (err) {
     if (err) throw err;
     console.log("Adding new employee to database...\n");
