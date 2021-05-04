@@ -48,7 +48,10 @@ const addEmployee = () => {
       last_name: employeeLastName,
     },
     {
-      role_id: employeeRole,
+      role_name: employeeRole,
+    },
+    {
+      manager_name: employeeManager,
     },
   ]);
 };
