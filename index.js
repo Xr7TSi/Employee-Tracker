@@ -19,6 +19,8 @@ function getUserOption() {
       insertEmployeeData();
     } else if (data.userOption === "Add new Role") {
       insertRoleData();
+    } else if (data.userOption === "Add new Department") {
+      addDepartment();
     }
   });
 }
@@ -58,6 +60,24 @@ function insertRoleData() {
         (err, res) => {
           if (err) throw err;
           console.log(`${res.affectedRows} new role added to the database.\n`);
+        }
+      );
+    })
+    .then(() => getUserOption());
+}
+
+function addDepartment() {
+  inquirer
+    .prompt(addDepartment)
+    .then((data) => {
+      connection.query(
+        "INSERT INTO departments set ?",
+        {
+          department_name: data.department,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} new department to the database.\n`);
         }
       );
     })

@@ -60,7 +60,7 @@ module.exports = {
     {
       type: "input",
       message: "Enter new Department:",
-      name: "newDepartment",
+      name: "department",
     },
   ],
   
