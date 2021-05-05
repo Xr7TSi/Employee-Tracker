@@ -1,6 +1,3 @@
-
-
-
 module.exports = {
   userOptions: {
     type: "list",
@@ -15,6 +12,7 @@ module.exports = {
       "Update Employee Manager",
       "Add new Role",
       "Add new Department",
+      "Quit",
     ],
   },
 
@@ -28,18 +26,6 @@ module.exports = {
       type: "input",
       message: "Enter Employee last name:",
       name: "employeeLastName",
-    },
-    {
-      type: "list",
-      message: "Choose Employee Role:",
-      name: "employeeRole",
-      choices: roles,
-    },
-    {
-      type: "list",
-      message: "Choose Employee Department:",
-      name: "employeeDepartment",
-      choices: ["Sales", "Engineering", "Finance", "Legal"],
     },
   ],
 
@@ -63,5 +49,4 @@ module.exports = {
       name: "department",
     },
   ],
-  
 };

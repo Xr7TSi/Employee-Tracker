@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 
-const { userOptions, addEmployee, addRole, roles } = require("./questions.js");
+const { userOptions, addEmployee, addRole, addDepartment } = require("./questions.js");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -34,7 +34,6 @@ function insertEmployeeData() {
         {
           first_name: data.employeeFirstName,
           last_name: data.employeeLastName,
-          role_name: data.employeeRole,
         },
         (err, res) => {
           if (err) throw err;
