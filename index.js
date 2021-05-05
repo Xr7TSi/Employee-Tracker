@@ -39,8 +39,8 @@ function insertEmployeeData() {
         {
           first_name: data.employeeFirstName,
           last_name: data.employeeLastName,
-          // role_id: data.employeeRole,
-          // manager_id: data.employeeManager,
+          role_id: data.employeeRole,
+          manager_id: data.employeeManager,
         },
         (err, res) => {
           if (err) throw err;
@@ -89,3 +89,6 @@ function insertDepartment() {
     })
     .then(() => getUserOption());
 }
+
+
+

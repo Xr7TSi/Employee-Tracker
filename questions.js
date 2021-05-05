@@ -29,14 +29,15 @@ module.exports = {
     },
     {
       type: "list",
-      message: "What is the new employee's role:",
+      message: "Choose new employee's role:",
       name: "employeeRole",
-      choices: [],
+      choices: []
     },
     {
-      type: "input",
-      message: "Who is the new employee's Manager:",
+      type: "list",
+      message: "Choose new employee's Manager:",
       name: "employeeManager",
+      choices: []
     },
   ],
 
