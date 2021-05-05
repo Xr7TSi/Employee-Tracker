@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 
 const {
   userOptions,
-  // addEmployee,
-  // addRole,
-  // addDepartment,
+  addEmployee,
+  addRole,
+  addDepartment,
 } = require("./questions.js");
 
 const connection = mysql.createConnection({
@@ -16,79 +16,36 @@ const connection = mysql.createConnection({
   database: "employeeTracker_db",
 });
 
-getUserOption();
+// getUserOption();
 
-function getUserOption() {
-  inquirer.prompt(userOptions).then((data) => {
-    if (data.userOption === "Add new Employee") {
-      insertEmployeeData();
-    } else if (data.userOption === "Add new Role") {
-      insertRoleData();
-    } else if (data.userOption === "Add new Department") {
-      insertDepartment();
-    }
-  });
-}
+// function getUserOption() {
+//   inquirer.prompt(userOptions).then((data) => {
+//     if (data.userOption === "Add new Employee") {
+//       insertEmployeeData();
+//     } else if (data.userOption === "Add new Role") {
+//       insertRoleData();
+//     } else if (data.userOption === "Add new Department") {
+//       insertDepartment();
+//     }
+//   });
+// }
 
-const roleArray = [];
-
-function insertEmployeeData() {
+function getRolesArray() {
   connection.query("SELECT title FROM roles", (err, res) => {
     if (err) throw err;
     roleArray = JSON.stringify(res);
     console.log(roleArray);
+
+    let roleChoices = roleArray[0].map((choice) => choice.title);
+    return roleChoices, console.log(roleChoices);
   });
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "Enter Employee first name:",
-        name: "employeeFirstName",
-      },
-      {
-        type: "input",
-        message: "Enter Employee last name:",
-        name: "employeeLastName",
-      },
-      {
-        type: "list",
-        message: "Choose new employee's role:",
-        name: "employeeRole",
-        choices: function () {
-          let rolesChoices = roleArray[0].map((roles) => roles.title);
-          return rolesChoices;
-        },
-      },
-      {
-        type: "list",
-        message: "Choose new employee's Manager:",
-        name: "employeeManager",
-        choices: [],
-      },
-    ])
-    .then((data) => {
-      connection.query(
-        "INSERT INTO employees SET ?",
-        {
-          first_name: data.employeeFirstName,
-          last_name: data.employeeLastName,
-          role_id: data.employeeRole,
-          manager_id: data.employeeManager,
-        },
-        (err, res) => {
-          if (err) throw err;
-          console.log(
-            `${res.affectedRows} new employee added to the database.\n`
-          );
-        }
-      );
-    });
 }
+getRolesArray();
 
 // function insertEmployeeData() {
 //   connection.query("SELECT title FROM roles", (err, res) => {
 //     if (err) throw err;
-//     let roleArray = JSON.stringify(res);
+//     roleArray = JSON.stringify(res);
 //     console.log(roleArray);
 //   });
 //   inquirer.prompt(addEmployee).then((data) => {

@@ -16,33 +16,30 @@ module.exports = {
     ],
   },
 
-  // addEmployee: [
-  //   {
-  //     type: "input",
-  //     message: "Enter Employee first name:",
-  //     name: "employeeFirstName",
-  //   },
-  //   {
-  //     type: "input",
-  //     message: "Enter Employee last name:",
-  //     name: "employeeLastName",
-  //   },
-  //   {
-  //     type: "list",
-  //     message: "Choose new employee's role:",
-  //     name: "employeeRole",
-  //     choices: function () {
-  //       let rolesChoices = roleArray[0].map(roles => roles.title);
-  //       return rolesChoices;
-  //   },
-  //   },
-  //   {
-  //     type: "list",
-  //     message: "Choose new employee's Manager:",
-  //     name: "employeeManager",
-  //     choices: []
-  //   },
-  // ],
+  addEmployee: [
+    {
+      type: "input",
+      message: "Enter Employee first name:",
+      name: "employeeFirstName",
+    },
+    {
+      type: "input",
+      message: "Enter Employee last name:",
+      name: "employeeLastName",
+    },
+    {
+      type: "list",
+      message: "Choose new employee's role:",
+      name: "employeeRole",
+      choices: []
+    },
+    {
+      type: "list",
+      message: "Choose new employee's Manager:",
+      name: "employeeManager",
+      choices: []
+    },
+  ],
 
   addRole: [
     {
