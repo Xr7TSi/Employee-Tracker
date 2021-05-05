@@ -4,14 +4,19 @@ CREATE DATABASE employees_db;
 
 USE employees_db;
 
-CREATE TABLE employees(
+
+
+CREATE TABLE employees (
     id INTEGER AUTO_INCREMENT NOT NULL,
     first_name varchar(30) NOT NULL,
     last_name varchar(30) NOT NULL,
     role_id int,
     manager_id int,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (manager_id) REFERENCES employees(id)  
 );
+
 
 CREATE TABLE departments (
     id INTEGER AUTO_INCREMENT NOT NULL,
@@ -24,7 +29,8 @@ CREATE TABLE roles (
     title varchar(30) NOT NULL,
     salary decimal NOT NULL,
     department_id int,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (department_id) REFERENCES departments(id) 
 );
 
 describe employees;
@@ -35,6 +41,10 @@ describe roles;
 select * from employees;
 select * from departments;
 select * from roles;
+
+drop table employees;
+drop table departments;
+drop table roles;
 
 
 
