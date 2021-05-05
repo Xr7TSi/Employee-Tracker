@@ -18,7 +18,7 @@ function getUserOption() {
     if (data.userOption === "Add Employee") {
       insertEmployeeData();
     } else if (data.userOption === "Add new Role") {
-      appendRole();
+      insertRoleData();
     }
   });
 }
@@ -33,7 +33,6 @@ function insertEmployeeData() {
           first_name: data.employeeFirstName,
           last_name: data.employeeLastName,
           role_name: data.employeeRole,
-          manager_name: data.employeeManager,
         },
         (err, res) => {
           if (err) throw err;
@@ -46,17 +45,21 @@ function insertEmployeeData() {
     .then(() => getUserOption());
 }
 
-function appendRole() {
+function insertRoleData() {
   inquirer
     .prompt(addRole)
     .then((data) => {
-      console.log(data.newRole);
-      roles.push(data.newRole),
+      connection.query(
+        "INSERT INTO roles SET ?",
+        {
+          title: data.roleTitle,
+          salary: data.roleSalary,
+        },
         (err, res) => {
           if (err) throw err;
-          console.log(`Role ${res.newRole} added`);
-        };
+          console.log(`${res.affectedRows} new role added to the database.\n`);
+        }
+      );
     })
     .then(() => getUserOption());
 }
-

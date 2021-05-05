@@ -1,11 +1,4 @@
-export const roles = [ "Sales Lead",
-"Salesperson",
-"Lead Engineer",
-"Software Engineer",
-"Accountant",
-"Legal Team Lead",
-"General Counsel",
-"Manager",]
+
 
 
 module.exports = {
@@ -48,23 +41,18 @@ module.exports = {
       name: "employeeDepartment",
       choices: ["Sales", "Engineering", "Finance", "Legal"],
     },
-    {
-      type: "input",
-      message: "Enter employee salary:",
-      name: "employeeSalary",
-    },
-    {
-      type: "input",
-      message: "Enter employee's Manager:",
-      name: "employeeManager",
-    },
   ],
 
   addRole: [
     {
       type: "input",
-      message: "Enter new Role:",
-      name: "newRole",
+      message: "Enter Role Title:",
+      name: "roleTitle",
+    },
+    {
+      type: "input",
+      message: "Enter Role Salary:",
+      name: "roleSalary",
     },
   ],
 
