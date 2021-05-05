@@ -1,7 +1,12 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 
-const { userOptions, addEmployee, addRole, addDepartment } = require("./questions.js");
+const {
+  userOptions,
+  addEmployee,
+  addRole,
+  addDepartment,
+} = require("./questions.js");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -15,7 +20,7 @@ getUserOption();
 
 function getUserOption() {
   inquirer.prompt(userOptions).then((data) => {
-    if (data.userOption === "Add Employee") {
+    if (data.userOption === "Add new Employee") {
       insertEmployeeData();
     } else if (data.userOption === "Add new Role") {
       insertRoleData();
@@ -34,6 +39,8 @@ function insertEmployeeData() {
         {
           first_name: data.employeeFirstName,
           last_name: data.employeeLastName,
+          // role_id: data.employeeRole,
+          // manager_id: data.employeeManager,
         },
         (err, res) => {
           if (err) throw err;

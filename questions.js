@@ -27,6 +27,17 @@ module.exports = {
       message: "Enter Employee last name:",
       name: "employeeLastName",
     },
+    {
+      type: "list",
+      message: "What is the new employee's role:",
+      name: "employeeRole",
+      choices: [],
+    },
+    {
+      type: "input",
+      message: "Who is the new employee's Manager:",
+      name: "employeeManager",
+    },
   ],
 
   addRole: [
