@@ -31,26 +31,35 @@ function getUserOption() {
 }
 
 function insertEmployeeData() {
-  inquirer
-    .prompt(addEmployee)
-    .then((data) => {
-      connection.query(
-        "INSERT INTO employees SET ?",
-        {
-          first_name: data.employeeFirstName,
-          last_name: data.employeeLastName,
-          role_id: data.employeeRole,
-          manager_id: data.employeeManager,
-        },
-        (err, res) => {
-          if (err) throw err;
-          console.log(
-            `${res.affectedRows} new employee added to the database.\n`
-          );
-        }
-      );
-    })
-    .then(() => getUserOption());
+
+  connection.query('SELECT title FROM roles', (err, res) => {
+    if (err) throw err;
+    console.log(res);
+    
+
+    connection.end();
+  });
+  
+
+    
+      inquirer.prompt(addEmployee).then((data) => {
+        connection.query(
+          "INSERT INTO employees SET ?",
+          {
+            first_name: data.employeeFirstName,
+            last_name: data.employeeLastName,
+            role_id: data.employeeRole,
+            manager_id: data.employeeManager,
+          },
+          (err, res) => {
+            if (err) throw err;
+            console.log(
+              `${res.affectedRows} new employee added to the database.\n`
+            );
+          }
+        );
+      });
+  
 }
 
 function insertRoleData() {
@@ -89,6 +98,3 @@ function insertDepartment() {
     })
     .then(() => getUserOption());
 }
-
-
-
