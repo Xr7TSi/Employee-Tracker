@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 
 const {
   userOptions,
-  addEmployee,
-  addRole,
-  addDepartment,
+  // addEmployee,
+  // addRole,
+  // addDepartment,
 } = require("./questions.js");
 
 const connection = mysql.createConnection({
@@ -30,71 +30,119 @@ function getUserOption() {
   });
 }
 
+const roleArray = [];
+
 function insertEmployeeData() {
-
-  connection.query('SELECT title FROM roles', (err, res) => {
+  connection.query("SELECT title FROM roles", (err, res) => {
     if (err) throw err;
-    console.log(res);
-    
-
-    connection.end();
+    roleArray = JSON.stringify(res);
+    console.log(roleArray);
   });
-  
-
-    
-      inquirer.prompt(addEmployee).then((data) => {
-        connection.query(
-          "INSERT INTO employees SET ?",
-          {
-            first_name: data.employeeFirstName,
-            last_name: data.employeeLastName,
-            role_id: data.employeeRole,
-            manager_id: data.employeeManager,
-          },
-          (err, res) => {
-            if (err) throw err;
-            console.log(
-              `${res.affectedRows} new employee added to the database.\n`
-            );
-          }
-        );
-      });
-  
-}
-
-function insertRoleData() {
   inquirer
-    .prompt(addRole)
+    .prompt([
+      {
+        type: "input",
+        message: "Enter Employee first name:",
+        name: "employeeFirstName",
+      },
+      {
+        type: "input",
+        message: "Enter Employee last name:",
+        name: "employeeLastName",
+      },
+      {
+        type: "list",
+        message: "Choose new employee's role:",
+        name: "employeeRole",
+        choices: function () {
+          let rolesChoices = roleArray[0].map((roles) => roles.title);
+          return rolesChoices;
+        },
+      },
+      {
+        type: "list",
+        message: "Choose new employee's Manager:",
+        name: "employeeManager",
+        choices: [],
+      },
+    ])
     .then((data) => {
       connection.query(
-        "INSERT INTO roles SET ?",
+        "INSERT INTO employees SET ?",
         {
-          title: data.roleTitle,
-          salary: data.roleSalary,
+          first_name: data.employeeFirstName,
+          last_name: data.employeeLastName,
+          role_id: data.employeeRole,
+          manager_id: data.employeeManager,
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} new role added to the database.\n`);
+          console.log(
+            `${res.affectedRows} new employee added to the database.\n`
+          );
         }
       );
-    })
-    .then(() => getUserOption());
+    });
 }
 
-function insertDepartment() {
-  inquirer
-    .prompt(addDepartment)
-    .then((data) => {
-      connection.query(
-        "INSERT INTO departments set ?",
-        {
-          department_name: data.department,
-        },
-        (err, res) => {
-          if (err) throw err;
-          console.log(`${res.affectedRows} new department to the database.\n`);
-        }
-      );
-    })
-    .then(() => getUserOption());
-}
+// function insertEmployeeData() {
+//   connection.query("SELECT title FROM roles", (err, res) => {
+//     if (err) throw err;
+//     let roleArray = JSON.stringify(res);
+//     console.log(roleArray);
+//   });
+//   inquirer.prompt(addEmployee).then((data) => {
+//     connection.query(
+//       "INSERT INTO employees SET ?",
+//       {
+//         first_name: data.employeeFirstName,
+//         last_name: data.employeeLastName,
+//         role_id: data.employeeRole,
+//         manager_id: data.employeeManager,
+//       },
+//       (err, res) => {
+//         if (err) throw err;
+//         console.log(
+//           `${res.affectedRows} new employee added to the database.\n`
+//         );
+//       }
+//     );
+//   });
+// }
+
+// function insertRoleData() {
+//   inquirer
+//     .prompt(addRole)
+//     .then((data) => {
+//       connection.query(
+//         "INSERT INTO roles SET ?",
+//         {
+//           title: data.roleTitle,
+//           salary: data.roleSalary,
+//         },
+//         (err, res) => {
+//           if (err) throw err;
+//           console.log(`${res.affectedRows} new role added to the database.\n`);
+//         }
+//       );
+//     })
+//     .then(() => getUserOption());
+// }
+
+// function insertDepartment() {
+//   inquirer
+//     .prompt(addDepartment)
+//     .then((data) => {
+//       connection.query(
+//         "INSERT INTO departments set ?",
+//         {
+//           department_name: data.department,
+//         },
+//         (err, res) => {
+//           if (err) throw err;
+//           console.log(`${res.affectedRows} new department to the database.\n`);
+//         }
+//       );
+//     })
+//     .then(() => getUserOption());
+// }
