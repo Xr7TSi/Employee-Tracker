@@ -34,7 +34,7 @@ function getUserOption() {
       if (data.userOption === "Add new Employee") {
         getRolesArray();
         getManagerArray();
-        // insertEmployeeData();
+        insertEmployeeData();
       } else if (data.userOption === "Add new Role") {
         insertRoleData();
       } else if (data.userOption === "Add new Department") {
