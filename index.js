@@ -9,6 +9,38 @@ const connection = mysql.createConnection({
   database: "employeeTracker_db",
 });
 
+
+let roleChoices = [];
+
+function getRolesArray() {
+  connection.query("SELECT title FROM roles", (err, res) => {
+    if (err) throw err;
+    roleArray = res;
+    roleChoices = roleArray.map((choice) => choice.title);
+    return roleChoices;
+  });
+}
+getRolesArray();
+
+
+let managerChoices = [];
+
+function getManagerArray() {
+  connection.query("SELECT * FROM employees", (err, res) => {
+    if (err) throw err;
+    employeesArray = res;
+    managerObjects = employeesArray.filter(
+      (manager) =>
+        (manager.role_id === manager.role_id) === 1 ||
+        manager.role_id === 3 ||
+        manager.role_id === 7
+    );
+    managerChoices = managerObjects.map((choice) => choice.last_name);
+    return managerChoices;
+  });
+}
+getManagerArray();
+
 getUserOption();
 
 function getUserOption() {
@@ -32,8 +64,6 @@ function getUserOption() {
 
     .then((data) => {
       if (data.userOption === "Add new Employee") {
-        getRolesArray();
-        getManagerArray();
         insertEmployeeData();
       } else if (data.userOption === "Add new Role") {
         insertRoleData();
@@ -43,32 +73,7 @@ function getUserOption() {
     });
 }
 
-let roleChoices = [];
-let managerChoices = [];
 
-function getRolesArray() {
-  connection.query("SELECT title FROM roles", (err, res) => {
-    if (err) throw err;
-    roleArray = res;
-    roleChoices = roleArray.map((choice) => choice.title);
-    return roleChoices;
-  });
-}
-
-function getManagerArray() {
-  connection.query("SELECT * FROM employees", (err, res) => {
-    if (err) throw err;
-    employeesArray = res;
-    managerObjects = employeesArray.filter(
-      (manager) =>
-        (manager.role_id === manager.role_id) === 1 ||
-        manager.role_id === 3 ||
-        manager.role_id === 7
-    );
-    managerChoices = managerObjects.map((choice) => choice.last_name);
-    return managerChoices;
-  });
-}
 
 function insertEmployeeData() {
   inquirer
@@ -115,54 +120,54 @@ function insertEmployeeData() {
     });
 }
 
-// function insertRoleData() {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "input",
-//         message: "Enter Role Title:",
-//         name: "roleTitle",
-//       },
-//       {
-//         type: "input",
-//         message: "Enter Role Salary:",
-//         name: "roleSalary",
-//       },
-//     ])
-//     .then((data) => {
-//       connection.query(
-//         "INSERT INTO roles SET ?",
-//         {
-//           title: data.roleTitle,
-//           salary: data.roleSalary,
-//         },
-//         (err, res) => {
-//           if (err) throw err;
-//           console.log(`${res.affectedRows} new role added to the database.\n`);
-//         }
-//       );
-//     })
-//     .then(() => getUserOption());
-// }
+function insertRoleData() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Enter Role Title:",
+        name: "roleTitle",
+      },
+      {
+        type: "input",
+        message: "Enter Role Salary:",
+        name: "roleSalary",
+      },
+    ])
+    .then((data) => {
+      connection.query(
+        "INSERT INTO roles SET ?",
+        {
+          title: data.roleTitle,
+          salary: data.roleSalary,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} new role added to the database.\n`);
+        }
+      );
+    })
+    .then(() => getUserOption());
+}
 
-// function insertDepartment() {
-//   inquirer
-//     .prompt({
-//       type: "input",
-//       message: "Enter new Department:",
-//       name: "department",
-//     })
-//     .then((data) => {
-//       connection.query(
-//         "INSERT INTO departments set ?",
-//         {
-//           department_name: data.department,
-//         },
-//         (err, res) => {
-//           if (err) throw err;
-//           console.log(`${res.affectedRows} new department to the database.\n`);
-//         }
-//       );
-//     })
-//     .then(() => getUserOption());
-// }
+function insertDepartment() {
+  inquirer
+    .prompt({
+      type: "input",
+      message: "Enter new Department:",
+      name: "department",
+    })
+    .then((data) => {
+      connection.query(
+        "INSERT INTO departments set ?",
+        {
+          department_name: data.department,
+        },
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} new department to the database.\n`);
+        }
+      );
+    })
+    .then(() => getUserOption());
+}
