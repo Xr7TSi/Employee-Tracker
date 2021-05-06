@@ -34,7 +34,7 @@ function getUserOption() {
       if (data.userOption === "Add new Employee") {
         getRolesArray();
         getManagerArray();
-        insertEmployeeData();
+        // insertEmployeeData();
       } else if (data.userOption === "Add new Role") {
         insertRoleData();
       } else if (data.userOption === "Add new Department") {
@@ -44,6 +44,7 @@ function getUserOption() {
 }
 
 let roleChoices = [];
+let managerChoices = [];
 
 function getRolesArray() {
   connection.query("SELECT title FROM roles", (err, res) => {
@@ -51,7 +52,7 @@ function getRolesArray() {
     roleArray = res;
     // console.log(roleArray);
     roleChoices = roleArray.map((choice) => choice.title);
-    // console.log(roleChoices);
+    console.log(roleChoices);
     return roleChoices;
   });
 }
@@ -62,7 +63,7 @@ function getManagerArray() {
     managerArray = res;
     // console.log(managerArray);
     managerChoices = managerArray.map((choice) => choice.title);
-    // console.log(managerChoices);
+    console.log(managerChoices);
     return managerChoices;
   });
 }
