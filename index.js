@@ -61,8 +61,10 @@ function getManagerArray() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
     employeesArray = res;
+
+
     // console.log(employeesArray);
-    managerChoices = employeesArray.map((choice) => choice.last_name);
+    managerChoices = employeesArray.filter(manager => manager.role_id === 1 || 3 || 7)
     console.log(managerChoices);
     return managerChoices;
   });
