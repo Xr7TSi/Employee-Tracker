@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS employeeTracker_db;
 
-CREATE DATABASE employeeTracker_db;
+CREATE DATABASE employees_db;
 
 USE employees_db;
 
@@ -10,7 +10,7 @@ CREATE TABLE employees (
     id INTEGER AUTO_INCREMENT NOT NULL,
     first_name varchar(30) NOT NULL,
     last_name varchar(30) NOT NULL,
-    role_id int,
+    role_id int NOT NULL,
     manager_id int,
     PRIMARY KEY (id),
     FOREIGN KEY (role_id) REFERENCES roles(id),
