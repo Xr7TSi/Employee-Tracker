@@ -1,58 +1,36 @@
+INSERT INTO departments
+(name)
+VALUES
+('Sales'),
+('Engineering'),
+('Finance'),
+('Legal');
 
-insert into employees (first_name, last_name, role_id, manager_id)
-values ("Walter", "White", 2, 7);
+INSERT INTO roles
+(title, salary, department_id)
+VALUES
+('Sales Lead', 900000, 1),
+('Salesperson', 65000, 1),
+('Lead Engineer', 130000, 2),
+('Software Engineer', 90000, 2),
+('Account Manager', 87000, 3),
+('Accountant', 65000, 3),
+('Legal Team Lead', 150000, 4),
+('Lawyer', 110000, 4);
 
-insert into employees (first_name, last_name, role_id, manager_id)
-values ("Gail", "Boetticher", 3, 7);
+INSERT INTO employees
+(first_name, last_name, role_id, manager_id)
+VALUES
+('Walter', 'White', 3, 6),
+('Gail', 'Boetticher', 4, 6),
+('Jesse', 'Pinkman', 2, 6),
+('Mike', 'Ehrmantrout', 6, 6),
+('Lydia', 'Rodarte-Quale', 7, null),
+('Gus', 'Fring', 7, null)
 
-insert into employees (first_name, last_name, role_id, manager_id)
-values ("Jesse", "Pinkman", 1, 7);
-
-insert into employees (first_name, last_name, role_id, manager_id)
-values ("Mike", "Ehrmantrout", 4, 7);
-
-insert into employees (first_name, last_name, role_id)
-values ("Gus", "Fring", 7);
-
-insert into employees (first_name, last_name, role_id)
-values ("Lydia", "Rodarte-Quale", 7);
-
-
-
-insert into roles(title, salary)
-values ("SalesPerson", 65000);
-
-insert into roles(title, salary)
-values ("Lead Engineer", 125000);
-
-insert into roles(title, salary)
-values ("Software Engineer", 105000);
-
-insert into roles(title, salary)
-values ("Accountant", 68000);
-
-insert into roles(title, salary)
-values ("Legal Team Lead", 145000);
-
-insert into roles(title, salary)
-values ("General Counsel", 125000);
-
-insert into roles(title, salary)
-values ("Manager", 85000);
-
+ 
 
   
-insert into departments(department_name)
-values ("Sales");
-
-insert into departments(department_name)
-values ("Engineering");
-
-insert into departments(department_name)
-values ("Finance");
-
-insert into departments(department_name)
-values ("Legal");
 
 
 
