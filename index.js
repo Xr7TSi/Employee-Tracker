@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 });
 
 let roleChoices = [];
-
+// creates an array of choices from the roles table that will be used by inquirer for determining new employee role. Runs at app launch.
 function getRolesArray() {
   connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
@@ -26,7 +26,7 @@ function getRolesArray() {
 getRolesArray();
 
 let managerChoices = [];
-
+// creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
 function getManagersArray() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
@@ -46,7 +46,7 @@ function getManagersArray() {
 getManagersArray();
 
 // getUserOption();
-
+// uses inquirer to find which task user wants to perform
 // function getUserOption() {
 //   inquirer
 //     .prompt({
@@ -122,6 +122,7 @@ getManagersArray();
 //     });
 // }
 
+// inserts new role into roles table
 // function insertRoleData() {
 //   inquirer
 //     .prompt([
@@ -152,6 +153,7 @@ getManagersArray();
 //     .then(() => getUserOption());
 // }
 
+// inserts new department into departments table
 // function insertDepartment() {
 //   inquirer
 //     .prompt({
