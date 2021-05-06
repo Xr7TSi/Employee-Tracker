@@ -57,7 +57,7 @@ function getRolesArray() {
 
 function insertEmployeeData() {
   inquirer
-    .prompt(
+    .prompt([
       {
         type: "input",
         message: "Enter Employee first name:",
@@ -80,7 +80,7 @@ function insertEmployeeData() {
         name: "employeeManager",
         choices: [],
       },
-    )
+    ])
     .then((data) => {
       connection.query(
         "INSERT INTO employees SET ?",
@@ -102,7 +102,7 @@ function insertEmployeeData() {
 
 function insertRoleData() {
   inquirer
-    .prompt(
+    .prompt([
       {
         type: "input",
         message: "Enter Role Title:",
@@ -113,7 +113,7 @@ function insertRoleData() {
         message: "Enter Role Salary:",
         name: "roleSalary",
       },
-    )
+    ])
     .then((data) => {
       connection.query(
         "INSERT INTO roles SET ?",
@@ -132,13 +132,11 @@ function insertRoleData() {
 
 function insertDepartment() {
   inquirer
-    .prompt(
-      {
-        type: "input",
-        message: "Enter new Department:",
-        name: "department",
-      },
-    )
+    .prompt({
+      type: "input",
+      message: "Enter new Department:",
+      name: "department",
+    })
     .then((data) => {
       connection.query(
         "INSERT INTO departments set ?",
