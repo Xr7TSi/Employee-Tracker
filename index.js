@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const consoleTable = require("console.table")
+const consoleTable = require("console.table");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -25,7 +25,6 @@ function getRolesArray() {
 }
 getRolesArray();
 
-
 let departmentChoices = [];
 // creates an array of choices from the departments table that will be used by inquirer for adding new employee role. Runs at app launch.
 function getDepartmentsArray() {
@@ -41,7 +40,6 @@ function getDepartmentsArray() {
   return departmentChoices;
 }
 getDepartmentsArray();
-
 
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
@@ -62,7 +60,6 @@ function getManagersArray() {
 }
 getManagersArray();
 
-
 let employeeChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for updating an employee's role.  Runs at app launch.
 function getEmployeesNamesArray() {
@@ -78,7 +75,6 @@ function getEmployeesNamesArray() {
 }
 getEmployeesNamesArray();
 
-
 // uses inquirer to find which task user wants to perform
 function getUserOption() {
   inquirer
@@ -91,16 +87,22 @@ function getUserOption() {
         "View all Employees by Department",
         "View all employees by Manager",
         "Add new Employee",
-        "Remove Employee",
-        "Update Employee Role",
-        "Update Employee Manager",
         "Add new Role",
         "Add new Department",
+        "Update Employee Role",
+        "Update Employee Manager",
+        "Remove Employee",
         "Quit",
       ],
     })
     .then((data) => {
-      if (data.userOption === "Add new Employee") {
+      if (data.userOption === "View all Employees") {
+        viewAllEmployees();
+      } else if (data.userOption === "View all Employees by Department") {
+        viewAllEmployeesByDepartment();
+      } else if (data.userOption === "View all employees by Manager") {
+        viewAllEmployeesByManager();
+      } else if (data.userOption === "Add new Employee") {
         insertEmployeeData();
       } else if (data.userOption === "Add new Role") {
         insertRoleData();
@@ -108,13 +110,14 @@ function getUserOption() {
         insertDepartment();
       } else if (data.userOption === "Update Employee Role") {
         updateEmployeeRole();
-      } else if (data.userOption === "View all Employees") {
-        viewAllEmployees();
+      } else if (data.userOption === "Update Employee Manager") {
+        updateEmployeeManager();
+      } else if (data.userOption === "Remove Employee") {
+        removeEmployee();
       }
     });
 }
 getUserOption();
-
 
 // adds new employee to database
 function insertEmployeeData() {
@@ -144,22 +147,17 @@ function insertEmployeeData() {
       },
     ])
     .then((data) => {
-      connection.query(
-        "INSERT INTO employees SET ?",
-        {
-          first_name: data.employeeFirstName,
-          last_name: data.employeeLastName,
-          role_id: data.employeeRole,
-          manager_id: data.employeeManager,
-        },
-      );
+      connection.query("INSERT INTO employees SET ?", {
+        first_name: data.employeeFirstName,
+        last_name: data.employeeLastName,
+        role_id: data.employeeRole,
+        manager_id: data.employeeManager,
+      });
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New employee added to the database."),
-        getUserOption();
+      console.log("New employee added to the database."), getUserOption();
     });
-    
 }
 
 // inserts new role into roles table
@@ -184,22 +182,17 @@ function insertRoleData() {
       },
     ])
     .then((data) => {
-      connection.query(
-        "INSERT INTO roles SET ?",
-        {
-          title: data.roleTitle,
-          department_id: data.roleDepartment,
-          salary: data.roleSalary,
-        },
-      );
+      connection.query("INSERT INTO roles SET ?", {
+        title: data.roleTitle,
+        department_id: data.roleDepartment,
+        salary: data.roleSalary,
+      });
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New role added to the database."),
-        getUserOption();
+      console.log("New role added to the database."), getUserOption();
     });
 }
-
 
 // inserts new department into departments table
 function insertDepartment() {
@@ -210,20 +203,15 @@ function insertDepartment() {
       name: "department",
     })
     .then((data) => {
-      connection.query(
-        "INSERT INTO departments set ?",
-        {
-          name: data.department,
-        },
-      );
+      connection.query("INSERT INTO departments set ?", {
+        name: data.department,
+      });
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New department added to the database."),
-        getUserOption();
+      console.log("New department added to the database."), getUserOption();
     });
 }
-
 
 // updates current employee role to a new role
 function updateEmployeeRole() {
@@ -254,18 +242,14 @@ function updateEmployeeRole() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("Employee role updated"),
-        getUserOption();
+      console.log("Employee role updated"), getUserOption();
     });
 }
-
 
 function viewAllEmployees() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
-    console.table(res)
-  }), getUserOption();
+    console.table(res);
+  }),
+    getUserOption();
 }
-
-
-
