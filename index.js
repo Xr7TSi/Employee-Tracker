@@ -25,6 +25,22 @@ function getRolesArray() {
 }
 getRolesArray();
 
+let departmentChoices = [];
+// creates an array of choices from the departments table that will be used by inquirer for adding new employee role. Runs at app launch.
+function getDepartmentsArray() {
+  connection.query("SELECT * FROM departments", (err, res) => {
+    if (err) throw err;
+    departmentsArray = res;
+    // console.log(departmentsArray)
+    departmentChoices = departmentsArray.map((departments) => ({
+      name: departments.name,
+      value: departments.id,
+    }));
+  });
+  return departmentChoices;
+}
+getDepartmentsArray();
+
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
 function getManagersArray() {
@@ -118,8 +134,8 @@ function insertEmployeeData() {
           );
         }
       );
-    });
-  // getUserOption();
+    })
+    .then(() => getUserOption());
 }
 
 // inserts new role into roles table
@@ -132,6 +148,12 @@ function insertRoleData() {
         name: "roleTitle",
       },
       {
+        type: "list",
+        message: "Select Department:",
+        name: "roleDepartment",
+        choices: departmentChoices,
+      },
+      {
         type: "input",
         message: "Enter Role Salary:",
         name: "roleSalary",
@@ -142,11 +164,14 @@ function insertRoleData() {
         "INSERT INTO roles SET ?",
         {
           title: data.roleTitle,
+          department_id: data.roleDepartment,
           salary: data.roleSalary,
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} new role added to the database.\n`);
+          console.log(
+            `${res.affectedRows} new role added to the database.\n`
+          );
         }
       );
     })
@@ -158,20 +183,25 @@ function insertDepartment() {
   inquirer
     .prompt({
       type: "input",
-      message: "Enter new Department:",
+      message: "Enter new Department name:",
       name: "department",
     })
     .then((data) => {
       connection.query(
         "INSERT INTO departments set ?",
         {
-          department_name: data.department,
+          name: data.department,
         },
         (err, res) => {
           if (err) throw err;
-          console.log(`${res.affectedRows} new department to the database.\n`);
+          console.log(
+            `${res.affectedRows} new department added to the database.\n`
+          );
         }
       );
     })
     .then(() => getUserOption());
 }
+
+
+
