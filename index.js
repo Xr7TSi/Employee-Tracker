@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const consoleTable = require("console.table")
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -24,6 +25,7 @@ function getRolesArray() {
 }
 getRolesArray();
 
+
 let departmentChoices = [];
 // creates an array of choices from the departments table that will be used by inquirer for adding new employee role. Runs at app launch.
 function getDepartmentsArray() {
@@ -39,6 +41,7 @@ function getDepartmentsArray() {
   return departmentChoices;
 }
 getDepartmentsArray();
+
 
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
@@ -59,6 +62,7 @@ function getManagersArray() {
 }
 getManagersArray();
 
+
 let employeeChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for updating an employee's role.  Runs at app launch.
 function getEmployeesNamesArray() {
@@ -73,6 +77,7 @@ function getEmployeesNamesArray() {
   });
 }
 getEmployeesNamesArray();
+
 
 // uses inquirer to find which task user wants to perform
 function getUserOption() {
@@ -103,44 +108,12 @@ function getUserOption() {
         insertDepartment();
       } else if (data.userOption === "Update Employee Role") {
         updateEmployeeRole();
+      } else if (data.userOption === "View all Employees") {
+        viewAllEmployees();
       }
     });
 }
 getUserOption();
-
-function updateEmployeeRole() {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        message: "Select the employee you'd like to update",
-        name: "employeeGetsNewRole",
-        choices: employeeChoices,
-      },
-      {
-        type: "list",
-        message: "Select the employee's new role",
-        name: "newEmployeeRole",
-        choices: roleChoices,
-      },
-    ])
-    .then((data) => {
-      connection.query("Update employees SET ? WHERE ?", [
-        {
-          role_id: data.newEmployeeRole,
-        },
-        {
-          id: data.employeeGetsNewRole,
-        },
-      ]);
-    })
-    .then((err) => {
-      if (err) throw err;
-      console.log("Employee role updated"),
-        getUserOption();
-    });
-}
-
 
 
 // adds new employee to database
@@ -227,6 +200,7 @@ function insertRoleData() {
     });
 }
 
+
 // inserts new department into departments table
 function insertDepartment() {
   inquirer
@@ -249,3 +223,49 @@ function insertDepartment() {
         getUserOption();
     });
 }
+
+
+// updates current employee role to a new role
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the employee you'd like to update",
+        name: "employeeGetsNewRole",
+        choices: employeeChoices,
+      },
+      {
+        type: "list",
+        message: "Select the employee's new role",
+        name: "newEmployeeRole",
+        choices: roleChoices,
+      },
+    ])
+    .then((data) => {
+      connection.query("Update employees SET ? WHERE ?", [
+        {
+          role_id: data.newEmployeeRole,
+        },
+        {
+          id: data.employeeGetsNewRole,
+        },
+      ]);
+    })
+    .then((err) => {
+      if (err) throw err;
+      console.log("Employee role updated"),
+        getUserOption();
+    });
+}
+
+
+function viewAllEmployees() {
+  connection.query("SELECT * FROM employees", (err, res) => {
+    if (err) throw err;
+    console.table(res)
+  }), getUserOption();
+}
+
+
+

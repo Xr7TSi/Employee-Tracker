@@ -25,6 +25,8 @@
 
   #### From the command line, run npm install inquirer. 
   #### From the command line, run npm install mysql. 
+  #### From the command line, run npm install console.table --save 
+  
   #### Invoke the application with the command "node index.js."
   &nbsp;
 
