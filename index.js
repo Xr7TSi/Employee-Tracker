@@ -125,24 +125,23 @@ function updateEmployeeRole() {
       },
     ])
     .then((data) => {
-      connection.query(
-        "Update employees SET ? WHERE ?",
-        [
-          {
-            role_id: data.newEmployeeRole,
-          },
-          {
-            id: data.employeeGetsNewRole,
-          },
-        ],
-        (err, res) => {
-          if (err) throw err;
-          console.log(`${res.affectedRows} employee role updated\n`);
-        }
-      );
+      connection.query("Update employees SET ? WHERE ?", [
+        {
+          role_id: data.newEmployeeRole,
+        },
+        {
+          id: data.employeeGetsNewRole,
+        },
+      ]);
     })
-    .then(() => getUserOption());
+    .then((err) => {
+      if (err) throw err;
+      console.log("Employee role updated"),
+        getUserOption();
+    });
 }
+
+
 
 // adds new employee to database
 function insertEmployeeData() {
@@ -180,15 +179,14 @@ function insertEmployeeData() {
           role_id: data.employeeRole,
           manager_id: data.employeeManager,
         },
-        (err, res) => {
-          if (err) throw err;
-          console.log(
-            `${res.affectedRows} new employee added to the database.\n`
-          );
-        }
       );
     })
-    .then(() => getUserOption());
+    .then((err) => {
+      if (err) throw err;
+      console.log("New employee added to the database."),
+        getUserOption();
+    });
+    
 }
 
 // inserts new role into roles table
@@ -220,13 +218,13 @@ function insertRoleData() {
           department_id: data.roleDepartment,
           salary: data.roleSalary,
         },
-        (err, res) => {
-          if (err) throw err;
-          console.log(`${res.affectedRows} new role added to the database.\n`);
-        }
       );
     })
-    .then(() => getUserOption());
+    .then((err) => {
+      if (err) throw err;
+      console.log("New role added to the database."),
+        getUserOption();
+    });
 }
 
 // inserts new department into departments table
@@ -243,13 +241,11 @@ function insertDepartment() {
         {
           name: data.department,
         },
-        (err, res) => {
-          if (err) throw err;
-          console.log(
-            `${res.affectedRows} new department added to the database.\n`
-          );
-        }
       );
     })
-    .then(() => getUserOption());
+    .then((err) => {
+      if (err) throw err;
+      console.log("New department added to the database."),
+        getUserOption();
+    });
 }
