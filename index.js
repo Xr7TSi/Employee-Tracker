@@ -25,7 +25,6 @@ function getRolesArray() {
 }
 getRolesArray();
 
-
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
 function getManagersArray() {
@@ -51,6 +50,7 @@ function getUserOption() {
   inquirer
     .prompt({
       type: "list",
+      message: "What would you like to do?",
       name: "userOption",
       choices: [
         "View all Employees",
@@ -65,7 +65,6 @@ function getUserOption() {
         "Quit",
       ],
     })
-
     .then((data) => {
       if (data.userOption === "Add new Employee") {
         insertEmployeeData();
@@ -120,6 +119,7 @@ function insertEmployeeData() {
         }
       );
     });
+  // getUserOption();
 }
 
 // inserts new role into roles table

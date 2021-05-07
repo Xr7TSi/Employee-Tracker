@@ -20,18 +20,18 @@
 
 
 
-  // addRole: [
-  //   {
-  //     type: "input",
-  //     message: "Enter Role Title:",
-  //     name: "roleTitle",
-  //   },
-  //   {
-  //     type: "input",
-  //     message: "Enter Role Salary:",
-  //     name: "roleSalary",
-  //   },
-  // ],
+//   addRole: [
+//     {
+//       type: "input",
+//       message: "Enter Role Title:",
+//       name: "roleTitle",
+//     },
+//     {
+//       type: "input",
+//       message: "Enter Role Salary:",
+//       name: "roleSalary",
+//     },
+//   ],
 
 //   addDepartment: [
 //     {
