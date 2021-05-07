@@ -15,7 +15,6 @@ function getRolesArray() {
   connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
     rolesArray = res;
-    // console.log(rolesArray)
     roleChoices = rolesArray.map((roles) => ({
       name: roles.title,
       value: roles.id,
@@ -60,7 +59,21 @@ function getManagersArray() {
 }
 getManagersArray();
 
-getUserOption();
+let employeeChoices = [];
+// creates an array of choices from the employees table that will be used by inquirer for updating an employee's role.  Runs at app launch.
+function getEmployeesNamesArray() {
+  connection.query("SELECT * FROM employees", (err, res) => {
+    if (err) throw err;
+    employeesNamesArray = res;
+    employeeChoices = employeesNamesArray.map((employee) => ({
+      name: employee.first_name + employee.last_name,
+      value: employee.id,
+    }));
+    return employeeChoices;
+  });
+}
+getEmployeesNamesArray();
+
 // uses inquirer to find which task user wants to perform
 function getUserOption() {
   inquirer
@@ -88,10 +101,50 @@ function getUserOption() {
         insertRoleData();
       } else if (data.userOption === "Add new Department") {
         insertDepartment();
+      } else if (data.userOption === "Update Employee Role") {
+        updateEmployeeRole();
       }
     });
 }
+getUserOption();
 
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the employee you'd like to update",
+        name: "employeeGetsNewRole",
+        choices: employeeChoices,
+      },
+      {
+        type: "list",
+        message: "Select the employee's new role",
+        name: "newEmployeeRole",
+        choices: roleChoices,
+      },
+    ])
+    .then((data) => {
+      connection.query(
+        "Update employees SET ? WHERE ?",
+        [
+          {
+            role_id: data.newEmployeeRole,
+          },
+          {
+            id: data.employeeGetsNewRole,
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+          console.log(`${res.affectedRows} employee role updated\n`);
+        }
+      );
+    })
+    .then(() => getUserOption());
+}
+
+// adds new employee to database
 function insertEmployeeData() {
   inquirer
     .prompt([
@@ -169,9 +222,7 @@ function insertRoleData() {
         },
         (err, res) => {
           if (err) throw err;
-          console.log(
-            `${res.affectedRows} new role added to the database.\n`
-          );
+          console.log(`${res.affectedRows} new role added to the database.\n`);
         }
       );
     })
@@ -202,6 +253,3 @@ function insertDepartment() {
     })
     .then(() => getUserOption());
 }
-
-
-
