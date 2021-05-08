@@ -132,6 +132,7 @@ function viewAllEmployees() {
     getUserOption();
 }
 
+// shows all employees by department in the console
 function viewAllEmployeesByDepartment() {
   inquirer
     .prompt({
@@ -153,6 +154,7 @@ function viewAllEmployeesByDepartment() {
     });
 }
 
+// shows all employees by manager in the console
 function viewAllEmployeesByManager() {
   inquirer
     .prompt({
@@ -298,6 +300,39 @@ function updateEmployeeRole() {
     .then((err) => {
       if (err) throw err;
       console.log("Employee role updated"), getUserOption();
+    });
+}
+
+// updates current employee manager to a new manager
+function updateEmployeeManager() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the employee you'd like to update",
+        name: "employeeGetsNewRole",
+        choices: employeeChoices,
+      },
+      {
+        type: "list",
+        message: "Select the employee's new Manager",
+        name: "newEmployeeManager",
+        choices: managerChoices,
+      },
+    ])
+    .then((data) => {
+      connection.query("Update employees SET ? WHERE ?", [
+        {
+          manager_id: data.newEmployeeManager,
+        },
+        {
+          id: data.employeeGetsNewRole,
+        },
+      ]);
+    })
+    .then((err) => {
+      if (err) throw err;
+      console.log("Employee manager updated"), getUserOption();
     });
 }
 
