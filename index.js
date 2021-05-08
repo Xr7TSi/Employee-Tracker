@@ -41,6 +41,25 @@ function getDepartmentsArray() {
 }
 getDepartmentsArray();
 
+function viewAllEmployeesByDepartment() {
+  inquirer
+    .prompt({
+      type: "list",
+      message: "Select Department",
+      name: "selectedDepartment",
+      choices: departmentChoices,
+    })
+    .then((data) => {
+      let query = connection.query(
+        "SELECT * FROM employees WHERE ?",
+        (err, res) => {
+          if (err) throw err;
+          res.id === data.value, console.table(query);
+        }
+      );
+    });
+}
+
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
 function getManagersArray() {
@@ -253,3 +272,6 @@ function viewAllEmployees() {
   }),
     getUserOption();
 }
+
+// DeptChoices example:
+// { name: 'Engineering', value: 2 },
