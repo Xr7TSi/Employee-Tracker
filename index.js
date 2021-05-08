@@ -94,7 +94,7 @@ function getUserOption() {
         "Update Employee Manager",
         "Remove Employee",
         "Remove Department",
-        "Quit",
+        "Exit application",
       ],
     })
     .then((data) => {
@@ -118,8 +118,8 @@ function getUserOption() {
         removeEmployee();
       } else if (data.userOption === "Remove Department") {
         removeDepartment();
-      } else if (data.userOption === "quit") {
-        process.exitCode = -1;
+      } else if (data.userOption === "Exit application") {
+        console.log("Select Ctrl + C to exit.");
       }
     });
 }
