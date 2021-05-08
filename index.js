@@ -93,6 +93,7 @@ function getUserOption() {
         "Update Employee Role",
         "Update Employee Manager",
         "Remove Employee",
+        "Remove Department",
         "Quit",
       ],
     })
@@ -115,12 +116,16 @@ function getUserOption() {
         updateEmployeeManager();
       } else if (data.userOption === "Remove Employee") {
         removeEmployee();
+      } else if (data.userOption === "Remove Department") {
+        removeDepartment();
       }
     });
 }
 getUserOption();
 
 // functions below run depending on user selection as determined within getUserOption function
+
+// shows all employees in the console
 function viewAllEmployees() {
   connection.query("SELECT * FROM employees", (err, res) => {
     if (err) throw err;
@@ -345,14 +350,50 @@ function removeEmployee() {
       },
     ])
     .then((data) => {
-      connection.query("DELETE FROM employees WHERE ?", {
-        id: data.deletedEmployee,
+      connection.query(
+        "DELETE FROM employees WHERE ?",
+        {
+          id: data.deletedEmployee,
+        },
+        (err) => {
+          if (err) throw err;
+          console.log("Employee removed.");
+          getUserOption();
+        }
+      );
+    });
+}
+
+// deletes selected department from database
+function removeDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the Department you want to remove from the database.",
+        name: "deletedDepartment",
+        choices: departmentChoices,
       },
-      (err) => {
-        if (err) throw err;
-        console.log("Employee removed.");
-        getUserOption();
-      }
+    ])
+    .then((data) => {
+      connection.query(
+        "DELETE FROM roles WHERE ?",
+        {
+          department_id: data.deletedDepartment,
+        },
+      );
+    })
+    .then((data) => {
+      connection.query(
+        "DELETE FROM departments WHERE ?",
+        {
+          id: data.deletedDepartment,
+        },
+        (err) => {
+          if (err) throw err;
+          console.log("Department removed.");
+          getUserOption();
+        }
       );
     });
 }
