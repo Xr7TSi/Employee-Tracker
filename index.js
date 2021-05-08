@@ -50,13 +50,11 @@ function viewAllEmployeesByDepartment() {
       choices: departmentChoices,
     })
     .then((data) => {
-      let query = connection.query(
-        "SELECT * FROM employees WHERE ?",
-        (err, res) => {
+      connection.query("SELECT * FROM employees WHERE ?", (err, res) => {
           if (err) throw err;
-          res.id === data.value, console.table(query);
+          res.id === data.value;
         }
-      );
+      );console.table()
     });
 }
 
