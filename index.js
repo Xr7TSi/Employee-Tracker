@@ -10,6 +10,8 @@ const connection = mysql.createConnection({
   database: "employeeTracker_db",
 });
 
+// functions below run at application start to provide data for other user prompted functions
+
 let roleChoices = [];
 // creates an array of choices from the roles table that will be used by inquirer for determining new employee role. Runs at app launch.
 function getRolesArray() {
@@ -31,7 +33,6 @@ function getDepartmentsArray() {
   connection.query("SELECT * FROM departments", (err, res) => {
     if (err) throw err;
     departmentsArray = res;
-    // console.log(departmentsArray)
     departmentChoices = departmentsArray.map((departments) => ({
       name: departments.name,
       value: departments.id,
@@ -40,23 +41,6 @@ function getDepartmentsArray() {
   return departmentChoices;
 }
 getDepartmentsArray();
-
-function viewAllEmployeesByDepartment() {
-  inquirer
-    .prompt({
-      type: "list",
-      message: "Select Department",
-      name: "selectedDepartment",
-      choices: departmentChoices,
-    })
-    .then((data) => {
-      connection.query("SELECT * FROM employees WHERE ?", (err, res) => {
-          if (err) throw err;
-          res.id === data.value;
-        }
-      );console.table()
-    });
-}
 
 let managerChoices = [];
 // creates an array of choices from the employees table that will be used by inquirer for determining new employee manager.  Runs at app launch.
@@ -92,7 +76,9 @@ function getEmployeesNamesArray() {
 }
 getEmployeesNamesArray();
 
-// uses inquirer to find which task user wants to perform
+
+
+// uses inquirer to find which task user wants to perform.  Runs at app launch.
 function getUserOption() {
   inquirer
     .prompt({
@@ -135,6 +121,37 @@ function getUserOption() {
     });
 }
 getUserOption();
+
+
+// functions below run depending on user selection as determined within getUserOption function
+function viewAllEmployees() {
+  connection.query("SELECT * FROM employees", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+  }),
+    getUserOption();
+}
+
+function viewAllEmployeesByDepartment() {
+  inquirer
+    .prompt({
+      type: "list",
+      message: "Select Department",
+      name: "selectedDepartment",
+      choices: departmentChoices,
+    })
+    .then((data) => {
+      connection.query(
+        "SELECT * FROM employees WHERE role_id= ?",
+        data.selectedDepartment,
+        (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          getUserOption();
+        }
+      );
+    });
+}
 
 // adds new employee to database
 function insertEmployeeData() {
@@ -263,13 +280,4 @@ function updateEmployeeRole() {
     });
 }
 
-function viewAllEmployees() {
-  connection.query("SELECT * FROM employees", (err, res) => {
-    if (err) throw err;
-    console.table(res);
-  }),
-    getUserOption();
-}
 
-// DeptChoices example:
-// { name: 'Engineering', value: 2 },
