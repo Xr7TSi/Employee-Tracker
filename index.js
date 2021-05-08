@@ -119,6 +119,7 @@ function getUserOption() {
       } else if (data.userOption === "Remove Department") {
         removeDepartment();
       } else if (data.userOption === "quit") {
+        console.log("Employee Tracker has been exited.  Have a great day!"),
         process.exitCode = -1;
       }
     });
