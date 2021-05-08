@@ -153,6 +153,27 @@ function viewAllEmployeesByDepartment() {
     });
 }
 
+function viewAllEmployeesByManager() {
+  inquirer
+    .prompt({
+      type: "list",
+      message: "Select Manager",
+      name: "selectedManager",
+      choices: managerChoices,
+    })
+    .then((data) => {
+      connection.query(
+        "SELECT * FROM employees WHERE manager_id= ?",
+        data.selectedManager,
+        (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          getUserOption();
+        }
+      );
+    });
+}
+
 // adds new employee to database
 function insertEmployeeData() {
   inquirer
