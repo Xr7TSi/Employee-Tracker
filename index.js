@@ -76,8 +76,6 @@ function getEmployeesNamesArray() {
 }
 getEmployeesNamesArray();
 
-
-
 // uses inquirer to find which task user wants to perform.  Runs at app launch.
 function getUserOption() {
   inquirer
@@ -121,7 +119,6 @@ function getUserOption() {
     });
 }
 getUserOption();
-
 
 // functions below run depending on user selection as determined within getUserOption function
 function viewAllEmployees() {
@@ -336,4 +333,26 @@ function updateEmployeeManager() {
     });
 }
 
-
+// deletes selected employee from database
+function removeEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the employee you want to delete from the database.",
+        name: "deletedEmployee",
+        choices: employeeChoices,
+      },
+    ])
+    .then((data) => {
+      connection.query("DELETE FROM employees WHERE ?", {
+        id: data.deletedEmployee,
+      },
+      (err) => {
+        if (err) throw err;
+        console.log("Employee removed.");
+        getUserOption();
+      }
+      );
+    });
+}
