@@ -118,6 +118,8 @@ function getUserOption() {
         removeEmployee();
       } else if (data.userOption === "Remove Department") {
         removeDepartment();
+      } else if (data.userOption === "quit") {
+        process.exitCode = -1;
       }
     });
 }
@@ -215,7 +217,9 @@ function insertEmployeeData() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New employee added to the database."), getUserOption();
+      console.log("New employee added to the database."),
+        getEmployeesNamesArray(),
+        getUserOption();
     });
 }
 
@@ -249,7 +253,9 @@ function insertRoleData() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New role added to the database."), getUserOption();
+      console.log("New role added to the database."),
+        getRolesArray(),
+        getUserOption();
     });
 }
 
@@ -268,7 +274,9 @@ function insertDepartment() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("New department added to the database."), getUserOption();
+      console.log("New department added to the database."),
+        getDepartmentsArray(),
+        getUserOption();
     });
 }
 
@@ -301,7 +309,9 @@ function updateEmployeeRole() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("Employee role updated"), getUserOption();
+      console.log("Employee role updated"),
+        getEmployeesNamesArray(),
+        getUserOption();
     });
 }
 
@@ -334,7 +344,9 @@ function updateEmployeeManager() {
     })
     .then((err) => {
       if (err) throw err;
-      console.log("Employee manager updated"), getUserOption();
+      console.log("Employee manager updated"),
+        getEmployeesNamesArray(),
+        getUserOption();
     });
 }
 
@@ -357,8 +369,9 @@ function removeEmployee() {
         },
         (err) => {
           if (err) throw err;
-          console.log("Employee removed.");
-          getUserOption();
+          console.log("Employee removed."),
+            getEmployeesNamesArray(),
+            getUserOption();
         }
       );
     });
