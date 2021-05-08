@@ -53,7 +53,7 @@ function getManagersArray() {
         manager.role_id === 1 || manager.role_id === 3 || manager.role_id === 7
     );
     managerChoices = managerObjects.map((manager) => ({
-      name: manager.last_name,
+      name: manager.first_name + " " + manager.last_name,
       value: manager.id,
     }));
     return managerChoices;
@@ -68,7 +68,7 @@ function getEmployeesNamesArray() {
     if (err) throw err;
     employeesNamesArray = res;
     employeeChoices = employeesNamesArray.map((employee) => ({
-      name: employee.first_name + employee.last_name,
+      name: employee.first_name + " " + employee.last_name,
       value: employee.id,
     }));
     return employeeChoices;
