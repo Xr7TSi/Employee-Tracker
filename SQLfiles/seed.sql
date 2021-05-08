@@ -33,7 +33,12 @@ VALUES
 ('Jesse', 'Pinkman', 2, 2),
 ('Mike', 'Ehrmantrout', 6, 1)
 
- 
+
+INSERT INTO departments
+(name)
+VALUES
+('Construction'),
+
 
   
 

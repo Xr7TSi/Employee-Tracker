@@ -376,19 +376,15 @@ function removeDepartment() {
       },
     ])
     .then((data) => {
-      connection.query("DELETE FROM roles WHERE ?", {
-        department_id: data.deletedDepartment,
-      });
-    })
-    .then((err) => {
-      if (err) throw err;
-    })
-    .then(
-      (data) =>
-        connection.query("DELETE FROM departments WHERE ?", {
+      connection.query(
+        "DELETE FROM departments WHERE ?",
+        {
           id: data.deletedDepartment,
-        }),
-      console.log("Department removed."),
-      getUserOption()
-    );
+        },
+        (err) => {
+          if (err) throw err;
+          console.log("Department removed."), getUserOption();
+        }
+      );
+    });
 }
