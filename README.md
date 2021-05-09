@@ -17,7 +17,7 @@
   
   ## Description: 
 
-  #### Text
+  #### Employee Tracker is an employee database management tool.  It includes several function like: Add New Employee, Add New Department, Add New Role, Show All Employees, Update Employee role and several others.
   &nbsp;
 
   ## Installation: 
@@ -31,8 +31,13 @@
 
   ## Usage: 
 
-  #### See this link for an application demo: 
-  &nbsp;
+  #### See these links for an application demo: 
+  [Demo Video 1](https://drive.google.com/file/d/1DUFpx9-yUHpI9vS1MtU8XSbO-40sjdsF/view?usp=sharing) &nbsp;
+   
+  [Demo Video 2](https://drive.google.com/file/d/1Srx5fuylbfwoSDQL5ZS06L85OA50gQIV/view?usp=sharing) &nbsp;
+ 
+  [Demo Video 3](https://drive.google.com/file/d/1Srx5fuylbfwoSDQL5ZS06L85OA50gQIV/view?usp=sharing) &nbsp;
+  
 
 
   ## Questions?
