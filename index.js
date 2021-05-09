@@ -93,6 +93,7 @@ function getUserOption() {
         "Update Employee Role",
         "Update Employee Manager",
         "Remove Employee",
+        "Remove Role",
         "Remove Department",
         "Exit application",
       ],
@@ -116,6 +117,8 @@ function getUserOption() {
         updateEmployeeManager();
       } else if (data.userOption === "Remove Employee") {
         removeEmployee();
+      } else if (data.userOption === "Remove Role") {
+        removeRole();
       } else if (data.userOption === "Remove Department") {
         removeDepartment();
       } else if (data.userOption === "Exit application") {
@@ -396,7 +399,36 @@ function removeDepartment() {
         },
         (err) => {
           if (err) throw err;
-          console.log("Department removed."), getUserOption();
+          console.log("Department removed."),
+            getDepartmentsArray(),
+            getUserOption();
+        }
+      );
+    });
+}
+
+// deletes selected role from database
+function removeRole() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Select the role you want to remove from the database.",
+        name: "deletedRole",
+        choices: roleChoices,
+      },
+    ])
+    .then((data) => {
+      connection.query(
+        "DELETE FROM roles WHERE ?",
+        {
+          id: data.deletedRole,
+        },
+        (err) => {
+          if (err) throw err;
+          console.log("Role removed."), 
+          getRolesArray(), 
+          getUserOption();
         }
       );
     });

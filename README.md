@@ -12,9 +12,8 @@
   #### [License](#license:)
   &nbsp;
 
-[See Team Profile Generator on GitHub](https://github.com/Xr7TSi/Team-Profile-Generator)
+[Employee Tracker on GitHub](https://github.com/Xr7TSi/Employee-Tracker)
 
-![Employee Tracker](./Assets/Team-Profile.png)
   
   ## Description: 
 
